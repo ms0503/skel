@@ -36,10 +36,7 @@ impl VisitDir {
     }
 
     pub fn entries(self) -> Box<dyn Iterator<Item = io::Result<DirEntry>>> {
-        Box::new(
-            self.root
-                .chain(self.children.map(|s| s.entries()).flatten())
-        )
+        Box::new(self.root.chain(self.children.flat_map(|s| s.entries())))
     }
 }
 
